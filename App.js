@@ -14,13 +14,21 @@ export default function App() {
     }
   }
 
+  const handleDeleteStar = (key) => {
+    setStars(currentStars => {
+      return currentStars.filter((star) => star.key !== key);
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Input onAddStar = {handleAddStar}/>
 
       <FlatList
         data = {stars}
-        renderItem = {itemData => <Element title={itemData.item.value} /> }
+        renderItem = {itemData => <Element element={itemData.item} 
+          onDelete={handleDeleteStar}
+        /> }
       />
     </SafeAreaView>
   );
