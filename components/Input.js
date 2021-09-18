@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { Button, Modal, StyleSheet, TextInput, View } from 'react-native'
 
-const Input = ({visible, onAddStar, onCancel}) => {
-    const [star, setStar] = useState('');
+const Input = ({visible, onAddElement, onCancel}) => {
+    const [element, setElement] = useState('');
 
-    const handleStarText = (name) => {
-        setStar(name);
+    const handleElementText = (element) => {
+        setElement(element);
     }
 
-    const handleAddStar = () => {
-        onAddStar(star);
-        setStar('');
+    const handleAddElement = () => {
+        if (element !== 'undefined' && element.length !== 0) {
+            onAddElement(element);
+            setElement('');
+        }
     }
 
     const handleCancel = () => {
-        setStar('');
+        setElement('');
         onCancel();
     }
 
@@ -23,15 +25,15 @@ const Input = ({visible, onAddStar, onCancel}) => {
             <View style={styles.entryBlock} animationType="slide">
                 <TextInput 
                     style={styles.input}
-                    placeholder="Star"
-                    onChangeText={handleStarText}
-                    value={star}
+                    placeholder="Element"
+                    onChangeText={handleElementText}
+                    value={element}
                 />
                 <View style={styles.actions}>
                     <Button 
                         title = "Add"
                         style={styles.btn}
-                        onPress={handleAddStar}
+                        onPress={handleAddElement}
                     />
                     <Button 
                         title = "Cancel"
@@ -49,7 +51,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 15,
+        width: '50%'
     },
     btn: {
         flex: 1
