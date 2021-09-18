@@ -1,18 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-const Element = (props) => {
+const Element = ({onDelete, element}) => {
     return (
-        <TouchableOpacity onPress={() => props.onDelete(props.element.key)}>
-            <View style={styles.listItem}>
-                <Text>{props.element.value}</Text>
+        <TouchableOpacity onPress={() => onDelete(element.key)}>
+            <View style={styles.element}>
+                <Text>{element.value}</Text>
             </View>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    listItem: {
+    element: {
         backgroundColor: '#ccc',
         borderColor: 'black',
         borderWidth: 1,
