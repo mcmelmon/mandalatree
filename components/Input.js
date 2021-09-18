@@ -1,43 +1,69 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, TextInput, View } from 'react-native'
+import { Button, Modal, StyleSheet, TextInput, View } from 'react-native'
 
-const Input = ({onAddStar}) => {
+const Input = ({visible, onAddStar, onCancel}) => {
     const [star, setStar] = useState('');
 
     const handleStarText = (name) => {
         setStar(name);
     }
 
+    const handleAddStar = () => {
+        onAddStar(star);
+        setStar('');
+    }
+
+    const handleCancel = () => {
+        setStar('');
+        onCancel();
+    }
+
     return (
-        <View style={styles.entryBlock}>
-            <TextInput 
-            style={styles.input}
-            placeholder="Star"
-            onChangeText={handleStarText}
-            value={star}
-            />
-            <Button 
-            title = "Add"
-            style={styles.btn}
-            onPress={() => onAddStar(star)} />
-        </View>
+        <Modal visible={visible}>
+            <View style={styles.entryBlock} animationType="slide">
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Star"
+                    onChangeText={handleStarText}
+                    value={star}
+                />
+                <View style={styles.actions}>
+                    <Button 
+                        title = "Add"
+                        style={styles.btn}
+                        onPress={handleAddStar}
+                    />
+                    <Button 
+                        title = "Cancel"
+                        style={styles.btn}
+                        onPress={handleCancel}
+                    />
+                </View>
+            </View>
+        </Modal>
     )
 }
 
 const styles = StyleSheet.create({
+    actions: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 15
+    },
     btn: {
         flex: 1
     },
     entryBlock: {
         alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 20
+        flex: 1,
+        justifyContent: 'center',
       },
       input: {
-        flex: 1,
         borderBottomColor: 'black',
         borderBottomWidth: 1,
+        marginBottom: 20,
+        width: '75%'
       }
 })
 
