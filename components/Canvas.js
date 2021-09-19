@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native'
 
+import Card from './Card'
 import Element from './Element'
-import Input from './Input'
+import Reveal from './Reveal'
 
-const Canvas = (props) => {
+const Canvas = () => {
     const [elements, setElements] = useState([]);
     const [isGameMode, setIsGameMode] = useState(false);
 
@@ -18,30 +19,32 @@ const Canvas = (props) => {
         }
       }
     
-      const handleCancelAddElement = () => {
+    const handleCancelAddElement = () => {
         setIsGameMode(false);
-      }
-    
-      const handleDeleteElement = (key) => {
-        setElements(currentElements => {
-          return currentElements.filter((element) => element.key !== key);
-        });
-      }
-    
-      const toggleGameMode = () => {
-        setIsGameMode(!isGameMode);
-      }
+    }
 
-    return (
+    const handleDeleteElement = (key) => {
+        setElements(currentElements => {
+            return currentElements.filter((element) => element.key !== key);
+        });
+    }
+
+    const toggleGameMode = () => {
+        setIsGameMode(!isGameMode);
+    }
+
+    return (        
         <View style={styles.container}>
-            <Button title="Start Mandala" onPress={toggleGameMode} />
-            <Input visible={isGameMode} onAddElement={handleAddElement} onCancel={handleCancelAddElement} />
+            <Button title="Add Element" onPress={toggleGameMode} />
+            <Reveal visible={isGameMode} onAddElement={handleAddElement} onCancel={handleCancelAddElement} />
 
             <FlatList
-            data = {elements}
-            renderItem = {itemData => <Element element={itemData.item}
-                onDelete={handleDeleteElement}
-            /> }
+                data = {elements}
+                renderItem = {(itemData) =>
+                    <Card>
+                        <Element element={itemData.item} onDelete={handleDeleteElement}/>
+                    </Card>
+                }
             />
         </View>
     )

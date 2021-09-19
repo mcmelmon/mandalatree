@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const Element = ({onDelete, element}) => {
+    console.log(element);
     return (
         <TouchableOpacity onPress={() => onDelete(element.key)}>
             <View style={styles.element}>
