@@ -1,48 +1,50 @@
 import React, { useState } from 'react'
-import { Button, Modal, StyleSheet, TextInput, View } from 'react-native'
+import { Button, StyleSheet, TextInput, View } from 'react-native'
 
-const Input = ({visible, onAddElement, onCancel}) => {
-    const [element, setElement] = useState('');
+import Card from './Card'
 
-    const handleElementText = (element) => {
-        setElement(element);
-    }
+const Input = ({acceptBtn, onAccept, onCancel, placeholder}) => {
+    const [text, setText] = useState('');
 
-    const handleAddElement = () => {
-        if (element !== 'undefined' && element.length !== 0) {
-            onAddElement(element);
-            setElement('');
+    const handleAccept = () => {
+        if (text !== 'undefined' && text.length !== 0) {
+            onAccept(text);
+            setText('');
         }
     }
 
+    const handleInputText = (text) => {
+        setText(text);
+    }
+
     const handleCancel = () => {
-        setElement('');
+        setText('');
         onCancel();
     }
 
     return (
-        <Modal visible={visible}>
-            <View style={styles.entryBlock} animationType="slide">
+        <View style={styles.block}>
+            <Card style={styles.input}>
                 <TextInput 
                     style={styles.input}
-                    placeholder="Element"
-                    onChangeText={handleElementText}
-                    value={element}
+                    placeholder={placeholder}
+                    onChangeText={handleInputText}
+                    value={text}
                 />
-                <View style={styles.actions}>
-                    <Button 
-                        title = "Add"
-                        style={styles.btn}
-                        onPress={handleAddElement}
-                    />
-                    <Button 
-                        title = "Cancel"
-                        style={styles.btn}
-                        onPress={handleCancel}
-                    />
-                </View>
+            </Card>
+            <View style={styles.actions}>
+                <Button 
+                    title = {acceptBtn}
+                    style={styles.btn}
+                    onPress={handleAccept}
+                />
+                <Button 
+                    title = "Cancel"
+                    style={styles.btn}
+                    onPress={handleCancel}
+                />
             </View>
-        </Modal>
+        </View>
     )
 }
 
@@ -57,15 +59,16 @@ const styles = StyleSheet.create({
     btn: {
         flex: 1
     },
-    entryBlock: {
+    block: {
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
       },
-      input: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+    input: {
+        backgroundColor: 'white',
+        fontSize: 24,
         marginBottom: 20,
+        padding: 20,
         width: '75%'
       }
 })

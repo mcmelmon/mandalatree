@@ -4,6 +4,7 @@ import { Button, FlatList, SafeAreaView, StyleSheet } from 'react-native';
 
 import Canvas from './components/Canvas'
 import Header from './components/Header'
+import Signs from './constants/signs'
 
 export default function App() {
   return (
